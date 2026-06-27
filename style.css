@@ -229,6 +229,25 @@ nav a:hover {
   margin-bottom: 15px;
 }
 
+.food-card {
+  position: relative;
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
 .price-row {
   display: flex;
   justify-content: space-between;
@@ -743,6 +762,76 @@ nav a:hover::after {
   font-size: 36px;
   color: white;
   margin-bottom: 30px;
+}
+
+/* Login Button */
+
+.login-btn-nav{
+    display:inline-block;
+    text-decoration:none;
+    background:linear-gradient(135deg,#ff4b2b,#ff416c);
+    color:#fff;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(255,65,108,.35);
+}
+
+.login-btn-nav:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(255,65,108,.45);
+}
+
+.login-btn-nav:active{
+    transform:scale(.97);
+}
+
+/* Logout Button */
+
+.logout-btn{
+    background:linear-gradient(135deg,#ff4b2b,#ff416c);
+    color:#fff;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(255,65,108,.35);
+}
+
+.logout-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(255,65,108,.45);
+}
+
+.logout-btn:active{
+    transform:scale(.97);
+}
+
+.logout-btn{
+    background: linear-gradient(135deg,#ff4b2b,#ff416c);
+    color:#fff;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 8px 20px rgba(255,65,108,.35);
+}
+
+.logout-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(255,65,108,.45);
+}
+
+.logout-btn:active{
+    transform:scale(.97);
 }
 
 .input-box {

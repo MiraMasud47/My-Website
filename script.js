@@ -1,55 +1,14 @@
 const foods = [
-  {
-    id: 1,
-    name: "Hydrabadi Chicken Biryani",
-    category: "biryani",
-    price: 249,
-    desc: "Aromatic rice with royal spices.",
-    image: "./Website-images/Hydrabadi-Chicken-Biryani.png"
-  },
-  {
-    id: 2,
-    name: "Butter Chicken",
-    category: "chicken",
-    price: 299,
-    desc: "Creamy, rich and full of flavor.",
-    image: "./Website-images/Butter-Chicken.png"
-  },
-  {
-    id: 3,
-    name: "Paneer Khurchan Roll",
-    category: "paneer",
-    price: 159,
-    desc: "Soft paneer with spicy filling.",
-    image: "./Website-images/Paneer-Khurchan-Roll.png"
-  },
-  {
-    id: 4,
-    name: "Chilly Chicken Dry",
-    category: "chicken",
-    price: 229,
-    desc: "Crispy chicken with spicy sauce.",
-    image: "./Website-images/Chilly-Chicken-Dry.png"
-  },
-  {
-    id: 5,
-    name: "Soft Drinks",
-    category: "drinks",
-    price: 79,
-    desc: "Refreshing chilled drinks.",
-    image: "./Website-images/Soft-Drinks.png"
-  },
-  {
-    id: 6,
-    name: "Zafrani Malai Kofta",
-    category: "paneer",
-    price: 269,
-    desc: "Royal creamy kofta curry.",
-    image: "./Website-images/Zafrani-Malai-Kofta.png"
-  }
+  { id: 1, name: "Hydrabadi Chicken Biryani", category: "biryani", price: 249, desc: "Aromatic rice with royal spices.", image: "./Website-images/Hydrabadi-Chicken-Biryani.png" },
+  { id: 2, name: "Butter Chicken", category: "chicken", price: 299, desc: "Creamy, rich and full of flavor.", image: "./Website-images/Butter-Chicken.png" },
+  { id: 3, name: "Paneer Khurchan Roll", category: "paneer", price: 159, desc: "Soft paneer with spicy filling.", image: "./Website-images/Paneer-Khurchan-Roll.png" },
+  { id: 4, name: "Chilly Chicken Dry", category: "chicken", price: 229, desc: "Crispy chicken with spicy sauce.", image: "./Website-images/Chilly-Chicken-Dry.png" },
+  { id: 5, name: "Soft Drinks", category: "drinks", price: 79, desc: "Refreshing chilled drinks.", image: "./Website-images/Soft-Drinks.png" },
+  { id: 6, name: "Zafrani Malai Kofta", category: "paneer", price: 269, desc: "Royal creamy kofta curry.", image: "./Website-images/Zafrani-Malai-Kofta.png" }
 ];
 
 let cart = JSON.parse(localStorage.getItem("eliteCart")) || [];
+let wishlist = JSON.parse(localStorage.getItem("eliteWishlist")) || [];
 let currentCategory = "all";
 
 const menuGrid = document.getElementById("menuGrid");
@@ -57,10 +16,60 @@ const cartPanel = document.getElementById("cartPanel");
 const cartItems = document.getElementById("cartItems");
 const totalPrice = document.getElementById("totalPrice");
 const cartCount = document.getElementById("cartCount");
+const wishlistCount = document.getElementById("wishlistCount");
 const searchInput = document.getElementById("searchInput");
 
 function saveCart() {
   localStorage.setItem("eliteCart", JSON.stringify(cart));
+}
+
+function saveWishlist() {
+  localStorage.setItem("eliteWishlist", JSON.stringify(wishlist));
+}
+
+function updateWishlistCount() {
+  if (wishlistCount) {
+    wishlistCount.innerText = wishlist.length;
+  }
+}
+
+function isInWishlist(id) {
+  return wishlist.some(item => item.id === id);
+}
+
+function toggleWishlist(id) {
+  const loggedIn = localStorage.getItem("eliteLoggedIn");
+
+  if (loggedIn !== "true") {
+    alert("Please login first!");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const food = foods.find(item => item.id === id);
+
+  if (!food) {
+    alert("Product not found");
+    return;
+  }
+
+  if (isInWishlist(id)) {
+    wishlist = wishlist.filter(item => item.id !== id);
+    alert("Removed from wishlist");
+  } else {
+    wishlist.push({
+      id: food.id,
+      name: food.name,
+      price: food.price,
+      image: food.image,
+      desc: food.desc
+    });
+    alert("Added to wishlist ❤️");
+  }
+
+  saveWishlist();
+  updateWishlistCount();
+  applyFilters();
 }
 
 function displayFoods(items) {
@@ -69,18 +78,24 @@ function displayFoods(items) {
   menuGrid.innerHTML = "";
 
   items.forEach(food => {
+    const heartIcon = isInWishlist(food.id) ? "❤️" : "🤍";
+
     menuGrid.innerHTML += `
       <div class="food-card">
+
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist(${food.id})">
+          ${heartIcon}
+        </button>
+
         <img src="${food.image}" alt="${food.name}">
+
         <div class="food-info">
           <h3>${food.name}</h3>
           <p>${food.desc}</p>
 
           <div class="price-row">
             <h4>₹${food.price}</h4>
-            <button type="button" onclick="addToCart(${food.id})">
-              Add
-            </button>
+            <button type="button" onclick="addToCart(${food.id})">Add</button>
           </div>
 
           <button type="button" class="buy-now-btn" onclick="buyNow(${food.id})">
@@ -101,12 +116,8 @@ function applyFilters() {
   const searchValue = searchInput ? searchInput.value.toLowerCase() : "";
 
   const filtered = foods.filter(food => {
-    const matchCategory =
-      currentCategory === "all" || food.category === currentCategory;
-
-    const matchSearch =
-      food.name.toLowerCase().includes(searchValue);
-
+    const matchCategory = currentCategory === "all" || food.category === currentCategory;
+    const matchSearch = food.name.toLowerCase().includes(searchValue);
     return matchCategory && matchSearch;
   });
 
@@ -144,17 +155,16 @@ function addToCart(id) {
 }
 
 function buyNow(id) {
-  const loggedInUser = localStorage.getItem("eliteUser");
+  const loggedIn = localStorage.getItem("eliteLoggedIn");
 
-  if (!loggedInUser) {
+  if (loggedIn !== "true") {
     alert("Please login first!");
     window.location.href = "login.html";
     return;
   }
 
   addToCart(id);
-  localStorage.setItem("eliteUser", "loggedIn");
-  window.location.href = "index.html";
+  window.location.href = "checkout.html";
 }
 
 function updateCart() {
@@ -176,7 +186,6 @@ function updateCart() {
     cartItems.innerHTML += `
       <div class="cart-item">
         <img src="${item.image}" alt="${item.name}" width="60">
-
         <div>
           <h4>${item.name}</h4>
           <p>₹${item.price} × ${item.qty}</p>
@@ -232,6 +241,14 @@ function goToCheckout() {
     return;
   }
 
+  const loggedIn = localStorage.getItem("eliteLoggedIn");
+
+  if (loggedIn !== "true") {
+    alert("Please login first!");
+    window.location.href = "login.html";
+    return;
+  }
+
   window.location.href = "checkout.html";
 }
 
@@ -271,9 +288,9 @@ function saveCheckout(event) {
   event.preventDefault();
 
   const customer = {
-    name: document.getElementById("customerName").value,
-    phone: document.getElementById("customerPhone").value,
-    address: document.getElementById("customerAddress").value
+    name: document.getElementById("customerName")?.value.trim() || "",
+    phone: document.getElementById("customerPhone")?.value.trim() || "",
+    address: document.getElementById("customerAddress")?.value.trim() || ""
   };
 
   localStorage.setItem("eliteCustomer", JSON.stringify(customer));
@@ -315,58 +332,27 @@ function placeOrder() {
 
   const payment = selectedPayment.value;
 
-  if (payment === "Card Payment") {
-    const cardNumber = document.getElementById("cardNumber").value.trim();
-    const cardName = document.getElementById("cardName").value.trim();
-    const expiryDate = document.getElementById("expiryDate").value.trim();
-    const cvv = document.getElementById("cvv").value.trim();
-
-    if (!cardNumber || !cardName || !expiryDate || !cvv) {
-      alert("Please fill all card details.");
-      return;
-    }
-  }
-
-  if (payment === "UPI") {
-    const upiId = document.getElementById("upiId").value.trim();
-    const upiNumber = document.getElementById("upiNumber").value.trim();
-
-    if (!upiId && !upiNumber) {
-      alert("Please enter UPI ID or UPI mobile number.");
-      return;
-    }
-  }
-
   const customer = JSON.parse(localStorage.getItem("eliteCustomer")) || {};
   const finalCart = JSON.parse(localStorage.getItem("eliteCart")) || [];
   const total = localStorage.getItem("eliteTotal") || 0;
 
-  fetch("http://127.0.0.1:5000/save_order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      customer: customer,
-      cart: finalCart,
-      payment: payment,
-      total: total
-    })
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        localStorage.setItem("elitePayment", payment);
-        localStorage.removeItem("eliteCart");
-        window.location.href = "success.html";
-      } else {
-        alert("Order not saved: " + data.message);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      alert("Database connection error!");
-    });
+  const order = {
+    customer: customer,
+    cart: finalCart,
+    payment: payment,
+    total: total,
+    status: "Confirmed",
+    date: new Date().toLocaleString()
+  };
+
+  const orders = JSON.parse(localStorage.getItem("eliteOrders")) || [];
+  orders.push(order);
+
+  localStorage.setItem("eliteOrders", JSON.stringify(orders));
+  localStorage.setItem("elitePayment", payment);
+  localStorage.removeItem("eliteCart");
+
+  window.location.href = "success.html";
 }
 
 /* Success Page */
@@ -384,15 +370,131 @@ if (successName && successPayment && successTotal) {
   successTotal.innerText = "Total Paid: ₹" + total;
 }
 
+/* Login / Signup */
+function togglePassword() {
+  const password = document.getElementById("loginPassword");
+  if (!password) return;
+
+  password.type = password.type === "password" ? "text" : "password";
+}
+
+function loginUser(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail")?.value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword")?.value.trim();
+
+  if (!email || !password) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const savedUser = JSON.parse(localStorage.getItem("eliteUserAccount"));
+
+  if (!savedUser) {
+    alert("No account found. Please signup first.");
+    window.location.href = "signup.html";
+    return;
+  }
+
+  if (email === savedUser.email && password === savedUser.password) {
+    localStorage.setItem("eliteLoggedIn", "true");
+    localStorage.setItem("eliteUser", JSON.stringify(savedUser));
+
+    alert("Login successful!");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Invalid email or password!");
+  }
+}
+
+function logoutUser() {
+  localStorage.removeItem("eliteLoggedIn");
+  localStorage.removeItem("eliteUser");
+
+  alert("Logout successful!");
+  window.location.href = "index.html";
+}
+
+function toggleSignupPassword() {
+  const pass = document.getElementById("signupPassword");
+  if (!pass) return;
+
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+function signupUser(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("signupName")?.value.trim();
+  const email = document.getElementById("signupEmail")?.value.trim().toLowerCase();
+  const phone = document.getElementById("signupPhone")?.value.trim() || "";
+  const password = document.getElementById("signupPassword")?.value.trim();
+  const confirm = document.getElementById("confirmPassword")?.value.trim();
+
+  if (!name || !email || !password) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  if (confirm && password !== confirm) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  const user = {
+    name: name,
+    email: email,
+    phone: phone,
+    password: password,
+    address: ""
+  };
+
+  localStorage.setItem("eliteUserAccount", JSON.stringify(user));
+
+  alert("Signup successful! Please login.");
+  window.location.href = "login.html";
+}
+
+function checkLoginStatus() {
+  const loggedIn = localStorage.getItem("eliteLoggedIn");
+
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const profileBtn = document.getElementById("profileBtn");
+
+  const loginLink = document.getElementById("loginLink");
+  const logoutLink = document.getElementById("logoutLink");
+
+  if (loggedIn === "true") {
+    if (loginBtn) loginBtn.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+    if (profileBtn) profileBtn.style.display = "inline-block";
+
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutLink) logoutLink.style.display = "inline-block";
+  } else {
+    if (loginBtn) loginBtn.style.display = "inline-block";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (profileBtn) profileBtn.style.display = "none";
+
+    if (loginLink) loginLink.style.display = "inline-block";
+    if (logoutLink) logoutLink.style.display = "none";
+  }
+}
+
+/* Run */
 if (searchInput) {
   searchInput.addEventListener("input", applyFilters);
 }
 
 displayFoods(foods);
 updateCart();
+updateWishlistCount();
 showCheckout();
+checkLoginStatus();
 
-/* IMPORTANT: make functions work with onclick="" */
+/* onclick support */
 window.addToCart = addToCart;
 window.buyNow = buyNow;
 window.changeQty = changeQty;
@@ -402,132 +504,9 @@ window.goToCheckout = goToCheckout;
 window.filterItems = filterItems;
 window.saveCheckout = saveCheckout;
 window.placeOrder = placeOrder;
-
-window.addToCart = addToCart;
-
-function togglePassword() {
-  const password = document.getElementById("loginPassword");
-
-  if (password.type === "password") {
-    password.type = "text";
-  } else {
-    password.type = "password";
-  }
-}
-
-function loginUser(event) {
-  event.preventDefault();
-
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
-
-  if (email === "" || password === "") {
-    alert("Please fill all fields");
-    return;
-  }
-
-  localStorage.setItem("eliteLoggedIn", "true");
-
-  window.location.href = "/";
-}
-
-function logoutUser() {
-
-  localStorage.removeItem("eliteLoggedIn");
-
-  window.location.href = "/";
-
-}
-
-function toggleSignupPassword() {
-
-  const pass = document.getElementById("signupPassword");
-
-  if (pass.type === "password") {
-
-    pass.type = "text";
-
-  } else {
-
-    pass.type = "password";
-
-  }
-
-}
-
-function signupUser(event) {
-
-  event.preventDefault();
-
-  const name = document.getElementById("signupName").value;
-  const email = document.getElementById("signupEmail").value;
-  const phone = document.getElementById("signupPhone").value;
-  const password = document.getElementById("signupPassword").value;
-  const confirm = document.getElementById("confirmPassword").value;
-
-  if (password !== confirm) {
-
-    alert("Passwords do not match.");
-
-    return;
-
-  }
-
-  fetch("http://127.0.0.1:5000/signup", {
-
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify({
-
-      name: name,
-      email: email,
-      phone: phone,
-      password: password
-
-    })
-
-  })
-
-    .then(res => res.json())
-
-    .then(data => {
-
-      if (data.status === "success") {
-
-        alert("Account Created Successfully");
-
-        window.location.href = "login.html";
-
-      } else {
-
-        alert(data.message);
-
-      }
-
-    });
-
-}
-
-// Check login status
-window.onload = function () {
-
-  const loggedIn = localStorage.getItem("eliteLoggedIn");
-
-  if (loggedIn === "true") {
-
-    document.getElementById("loginLink").style.display = "none";
-    document.getElementById("logoutLink").style.display = "inline-block";
-
-    function logout() {
-      localStorage.removeItem("eliteUser");
-      alert("Logout successful!");
-      window.location.href = "index.html";
-    }
-
-  }
-
-}
+window.togglePassword = togglePassword;
+window.loginUser = loginUser;
+window.logoutUser = logoutUser;
+window.toggleSignupPassword = toggleSignupPassword;
+window.signupUser = signupUser;
+window.toggleWishlist = toggleWishlist;

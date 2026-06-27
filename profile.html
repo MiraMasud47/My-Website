@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Royal Spice</title>
+
+  <style>
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(135deg,#fff7ef,#ffe8c8);
+      color:#111;
+    }
+
+    .profile-header{
+      height:70px;
+      background:#160f0a;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 5%;
+      box-shadow:0 4px 15px rgba(0,0,0,.25);
+    }
+
+    .logo-box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:20px;
+      font-weight:bold;
+      color:#f6b647;
+    }
+
+    .logo-box img{
+      width:42px;
+      height:42px;
+      object-fit:contain;
+    }
+
+    .profile-header a,
+    .profile-header button{
+      background:#f6b647;
+      color:#111;
+      border:none;
+      padding:9px 18px;
+      border-radius:25px;
+      text-decoration:none;
+      font-weight:bold;
+      cursor:pointer;
+      margin-left:8px;
+    }
+
+    .profile-page{
+      max-width:1100px;
+      margin:35px auto;
+      padding:0 18px;
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:25px;
+    }
+
+    .profile-card,
+    .form-card{
+      background:white;
+      border:1px solid #ffd39a;
+      border-radius:22px;
+      padding:25px;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .profile-card{
+      text-align:center;
+    }
+
+    .avatar{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      margin:auto;
+      background:linear-gradient(135deg,#f6b647,#7a2e00);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-size:45px;
+      font-weight:bold;
+      border:5px solid #fff2dc;
+    }
+
+    .profile-card h2{
+      margin:18px 0 5px;
+    }
+
+    .profile-card p{
+      color:#666;
+      margin:6px 0;
+    }
+
+    .badge{
+      display:inline-block;
+      margin-top:15px;
+      background:#fff0d1;
+      color:#9a4d00;
+      padding:8px 18px;
+      border-radius:20px;
+      font-weight:bold;
+    }
+
+    .mini-stats{
+      margin-top:25px;
+      display:grid;
+      gap:12px;
+    }
+
+    .mini-box{
+      background:#fff7ef;
+      border:1px solid #ffe0b8;
+      padding:15px;
+      border-radius:15px;
+      text-align:left;
+    }
+
+    .mini-box strong{
+      display:block;
+      font-size:20px;
+    }
+
+    .form-card h1{
+      margin:0 0 8px;
+    }
+
+    .form-card .sub{
+      color:#666;
+      margin-bottom:25px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .input-group{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .input-group.full{
+      grid-column:1 / -1;
+    }
+
+    .input-group label{
+      margin-bottom:7px;
+      font-weight:bold;
+    }
+
+    .input-group input,
+    .input-group textarea{
+      padding:14px;
+      border:1px solid #ddd;
+      border-radius:12px;
+      font-size:15px;
+      outline:none;
+      background:#fffaf4;
+    }
+
+    .input-group textarea{
+      height:95px;
+      resize:none;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus{
+      border-color:#f6b647;
+      box-shadow:0 0 0 3px rgba(246,182,71,.2);
+    }
+
+    .buttons{
+      margin-top:25px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .save-btn{
+      background:#160f0a;
+      color:white;
+      border:none;
+      padding:13px 28px;
+      border-radius:25px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .reset-btn{
+      background:#f6b647;
+      color:#111;
+      border:none;
+      padding:13px 28px;
+      border-radius:25px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    @media(max-width:850px){
+      .profile-page{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="profile-header">
+  <div class="logo-box">
+    <img src="Website-images/Royal-Spice.png" alt="Royal Spice">
+    Royal Spice
+  </div>
+
+  <div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="index.html">Home</a>
+    <button onclick="logoutUser()">Logout</button>
+  </div>
+</header>
+
+<main class="profile-page">
+
+  <aside class="profile-card">
+    <div class="avatar" id="avatarLetter">U</div>
+
+    <h2 id="sideName">User Name</h2>
+    <p id="sideEmail">user@email.com</p>
+
+    <span class="badge">🌟 Gold Foodie Member</span>
+
+    <div class="mini-stats">
+      <div class="mini-box">
+        <strong id="profileOrderCount">0</strong>
+        Total Orders
+      </div>
+
+      <div class="mini-box">
+        <strong id="profileCartCount">0</strong>
+        Cart Items
+      </div>
+
+      <div class="mini-box">
+        <strong>WELCOME20</strong>
+        Active Coupon
+      </div>
+    </div>
+  </aside>
+
+  <section class="form-card">
+    <h1>My Profile</h1>
+    <p class="sub">Manage your account and delivery details.</p>
+
+    <form onsubmit="saveProfile(event)">
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="profileName" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="profileEmail" required>
+        </div>
+
+        <div class="input-group">
+          <label>Phone Number</label>
+          <input type="text" id="profilePhone" placeholder="Enter phone number">
+        </div>
+
+        <div class="input-group">
+          <label>Favourite Food</label>
+          <input type="text" id="profileFavFood" placeholder="Biryani, Butter Chicken...">
+        </div>
+
+        <div class="input-group full">
+          <label>Delivery Address</label>
+          <textarea id="profileAddress" placeholder="Enter your delivery address"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>New Password</label>
+          <input type="password" id="profilePassword" placeholder="Leave blank to keep old">
+        </div>
+
+        <div class="input-group">
+          <label>Confirm Password</label>
+          <input type="password" id="profileConfirmPassword" placeholder="Confirm password">
+        </div>
+
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="save-btn">Save Changes</button>
+        <button type="button" class="reset-btn" onclick="loadProfile()">Reset</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+
+<script>
+  function loadProfile() {
+    const user = JSON.parse(localStorage.getItem("eliteUser"));
+
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "login.html";
+      return;
+    }
+
+    document.getElementById("profileName").value = user.name || "";
+    document.getElementById("profileEmail").value = user.email || "";
+    document.getElementById("profilePhone").value = user.phone || "";
+    document.getElementById("profileAddress").value = user.address || "";
+    document.getElementById("profileFavFood").value = user.favFood || "";
+
+    document.getElementById("sideName").innerText = user.name || "User Name";
+    document.getElementById("sideEmail").innerText = user.email || "user@email.com";
+    document.getElementById("avatarLetter").innerText =
+      (user.name || "User").charAt(0).toUpperCase();
+
+    const orders = JSON.parse(localStorage.getItem("eliteOrders")) || [];
+    const cart = JSON.parse(localStorage.getItem("eliteCart")) || [];
+
+    document.getElementById("profileOrderCount").innerText = orders.length;
+    document.getElementById("profileCartCount").innerText =
+      cart.reduce((sum, item) => sum + item.qty, 0);
+  }
+
+  function saveProfile(event) {
+    event.preventDefault();
+
+    const oldUser = JSON.parse(localStorage.getItem("eliteUser")) || {};
+
+    const password = document.getElementById("profilePassword").value.trim();
+    const confirmPassword = document.getElementById("profileConfirmPassword").value.trim();
+
+    if (password && password !== confirmPassword) {
+      alert("Password and confirm password do not match!");
+      return;
+    }
+
+    const updatedUser = {
+      ...oldUser,
+      name: document.getElementById("profileName").value.trim(),
+      email: document.getElementById("profileEmail").value.trim().toLowerCase(),
+      phone: document.getElementById("profilePhone").value.trim(),
+      address: document.getElementById("profileAddress").value.trim(),
+      favFood: document.getElementById("profileFavFood").value.trim(),
+      password: password || oldUser.password || ""
+    };
+
+    localStorage.setItem("eliteUser", JSON.stringify(updatedUser));
+    localStorage.setItem("eliteUserAccount", JSON.stringify(updatedUser));
+
+    alert("Profile updated successfully!");
+    loadProfile();
+  }
+
+  loadProfile();
+</script>
+
+</body>
+</html>

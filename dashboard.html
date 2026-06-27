@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Food Dashboard - Royal Spice</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7ef;
+            color: #222;
+        }
+
+        .food-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: #160f0a;
+            color: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px 5%;
+            height: 70px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .25);
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f6b647;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 18px;
+            font-weight: 700;
+            color: #f6b647;
+        }
+
+        .logo-box img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .food-header a,
+        .food-header button {
+
+            text-decoration: none;
+            border: none;
+
+            background: #f6b647;
+            color: #111;
+
+            padding: 8px 18px;
+            border-radius: 30px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .food-header a:hover,
+        .food-header button:hover {
+
+            background: #ffcc66;
+            transform: translateY(-2px);
+
+        }
+
+        .hero-dash {
+            padding: 30px 5%;
+            background: linear-gradient(135deg, #2a1408, #7a2e00);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .hero-dash h1 {
+            font-size: 42px;
+            margin: 0 0 10px;
+        }
+
+        .hero-dash p {
+            color: #ffe6c7;
+            font-size: 18px;
+        }
+
+        .order-now {
+            background: #f6b647;
+            color: #111;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dashboard {
+            width: 88%;
+            margin: 30px auto;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .quick-card {
+            background: white;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+            border: 1px solid #ffe0b8;
+        }
+
+        .quick-card h2 {
+            margin: 10px 0;
+        }
+
+        .quick-card span {
+            font-size: 35px;
+        }
+
+        .section-title {
+            margin: 35px 0 18px;
+            font-size: 28px;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        .dish-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+        }
+
+        .dish-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .dish-info {
+            padding: 18px;
+        }
+
+        .dish-info h3 {
+            margin: 0 0 8px;
+        }
+
+        .dish-info p {
+            color: #666;
+        }
+
+        .dish-info a {
+            display: inline-block;
+            background: #160f0a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+
+        .order-box {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+            margin-top: 20px;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 16px 0;
+        }
+
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            background: #e7f9ee;
+            color: #087b39;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .coupon {
+            margin-top: 25px;
+            background: #fff0d1;
+            border: 2px dashed #f6b647;
+            padding: 25px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .coupon b {
+            color: #b85b00;
+        }
+
+        @media(max-width:700px) {
+            .hero-dash {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-dash h1 {
+                font-size: 32px;
+            }
+
+            .order-row,
+            .coupon {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="food-header">
+        <div class="logo-box">
+            <img src="Website-images/Royal-Spice.png" alt="Royal Spice">
+            Royal Spice
+        </div>
+
+        <div>
+            <a href="index.html">Home</a>
+            <button onclick="logoutUser()">Logout</button>
+        </div>
+    </header>
+
+    <section class="hero-dash">
+        <div>
+            <h1>Hello, <span id="userName">Foodie</span> 👋</h1>
+            <p>Welcome back! Your favourite spicy dishes are waiting for you.</p>
+        </div>
+
+        <a href="index.html#menu" class="order-now">Order Food Now</a>
+    </section>
+
+    <main class="dashboard">
+
+        <div class="quick-grid">
+            <div class="quick-card">
+                <span>📦</span>
+                <h2 id="orderCount">0 Orders</h2>
+                <p>Your total food orders</p>
+            </div>
+
+            <div class="quick-card">
+                <span>❤️</span>
+                <h2 id="wishCount">0 Wishlist</h2>
+                <p>Your favourite dishes</p>
+            </div>
+
+            <div class="quick-card">
+                <span>🛒</span>
+                <h2 id="cartCountDash">0 Cart</h2>
+                <p>Items waiting in cart</p>
+            </div>
+
+            <div class="quick-card">
+                <span>🚚</span>
+                <h2>25-30 Min</h2>
+                <p>Average delivery time</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Quick Food Actions</h2>
+
+        <div class="quick-grid">
+            <div class="quick-card">
+                <span>🍽️</span>
+                <h2>Order Again</h2>
+                <p>Reorder your favourite dishes quickly.</p>
+                <a href="index.html#menu">Open Menu</a>
+            </div>
+
+            <div class="quick-card">
+                <span>📍</span>
+                <h2>Delivery Address</h2>
+                <p>Edit your saved delivery address.</p>
+                <a href="profile.html">Edit Address</a>
+            </div>
+
+            <div class="quick-card">
+                <span>❤️</span>
+                <h2>Favourite Food</h2>
+                <p>Open your saved dishes.</p>
+                <a href="wishlist.html">Wishlist</a>
+            </div>
+
+            <div class="quick-card">
+                <span>👤</span>
+                <h2>Profile</h2>
+                <p>Manage your account details.</p>
+                <a href="profile.html">My Profile</a>
+            </div>
+        </div>
+
+        <h2 class="section-title">Recommended For You</h2>
+
+        <div class="food-grid">
+            <div class="dish-card">
+                <img src="Website-images/Hydrabadi-Chicken-Biryani.png">
+                <div class="dish-info">
+                    <h3>Hyderabadi Chicken Biryani</h3>
+                    <p>Royal spicy biryani with premium rice.</p>
+                    <a href="index.html#menu">Order Now</a>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="Website-images/Butter-Chicken.png">
+                <div class="dish-info">
+                    <h3>Butter Chicken</h3>
+                    <p>Creamy, rich and perfect dinner dish.</p>
+                    <a href="index.html#menu">Order Now</a>
+                </div>
+            </div>
+
+            <div class="dish-card">
+                <img src="Website-images/Zafrani-Malai-Kofta.png">
+                <div class="dish-info">
+                    <h3>Zafrani Malai Kofta</h3>
+                    <p>Royal creamy kofta for premium taste.</p>
+                    <a href="index.html#menu">Order Now</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Recent Food Orders</h2>
+
+        <div class="order-box">
+            <div class="order-row">
+                <div>
+                    <h3>Butter Chicken</h3>
+                    <p>Order Status: Cooking in kitchen</p>
+                </div>
+                <span class="status">Preparing</span>
+            </div>
+
+            <div class="order-row">
+                <div>
+                    <h3>Hyderabadi Biryani</h3>
+                    <p>Delivered successfully</p>
+                </div>
+                <span class="status">Delivered</span>
+            </div>
+        </div>
+
+        <div class="coupon">
+            <div>
+                <h2>🔥 Special Food Offer</h2>
+                <p>Use coupon <b>WELCOME20</b> and get 20% OFF on your next order.</p>
+            </div>
+
+            <a class="order-now" href="index.html#menu">Use Offer</a>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem("eliteUser"));
+        const orders = JSON.parse(localStorage.getItem("eliteOrders")) || [];
+        const wishlist = JSON.parse(localStorage.getItem("eliteWishlist")) || [];
+        const cart = JSON.parse(localStorage.getItem("eliteCart")) || [];
+
+        if (!user) {
+            alert("Please login first!");
+            window.location.href = "login.html";
+        } else {
+            document.getElementById("userName").innerText = user.name || "Foodie";
+        }
+
+        document.getElementById("orderCount").innerText = orders.length + " Orders";
+        document.getElementById("wishCount").innerText = wishlist.length + " Wishlist";
+
+        const cartTotal = cart.reduce((sum, item) => sum + item.qty, 0);
+        document.getElementById("cartCountDash").innerText = cartTotal + " Cart";
+    </script>
+
+</body>
+
+</html>
