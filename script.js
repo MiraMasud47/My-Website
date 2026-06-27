@@ -144,7 +144,17 @@ function addToCart(id) {
 }
 
 function buyNow(id) {
+  const loggedInUser = localStorage.getItem("eliteUser");
+
+  if (!loggedInUser) {
+    alert("Please login first!");
+    window.location.href = "login.html";
+    return;
+  }
+
   addToCart(id);
+  localStorage.setItem("eliteUser", "loggedIn");
+  window.location.href = "index.html";
 }
 
 function updateCart() {
@@ -421,11 +431,11 @@ function loginUser(event) {
   window.location.href = "/";
 }
 
-function logoutUser(){
+function logoutUser() {
 
-    localStorage.removeItem("eliteLoggedIn");
+  localStorage.removeItem("eliteLoggedIn");
 
-    window.location.href="/";
+  window.location.href = "/";
 
 }
 
@@ -511,6 +521,12 @@ window.onload = function () {
 
     document.getElementById("loginLink").style.display = "none";
     document.getElementById("logoutLink").style.display = "inline-block";
+
+    function logout() {
+      localStorage.removeItem("eliteUser");
+      alert("Logout successful!");
+      window.location.href = "index.html";
+    }
 
   }
 
