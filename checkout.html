@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - Elite Food</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">ELITE<span>.</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#menu">Menu</a>
+  </nav>
+</header>
+
+<section class="checkout-page">
+  <h1>Checkout</h1>
+
+  <div id="checkoutItems"></div>
+
+  <div class="checkout-total">
+    Total: ₹<span id="checkoutTotal">0</span>
+  </div>
+
+  <form class="checkout-form" onsubmit="saveCheckout(event)">
+    <input type="text" id="customerName" placeholder="Full Name" required>
+    <input type="tel" id="customerPhone" placeholder="Mobile Number" required>
+    <textarea id="customerAddress" placeholder="Full Address" required></textarea>
+
+    <button class="checkout-btn" type="submit">Continue to Payment</button>
+  </form>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

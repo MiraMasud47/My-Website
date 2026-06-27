@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment - Elite Food</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">ELITE<span>.</span></div>
+  <nav>
+    <a href="/">Home</a>
+  </nav>
+</header>
+
+<section class="checkout-page">
+  <h1>Payment Method</h1>
+
+  <div class="payment-box">
+    <label>
+      <input type="radio" name="payment" value="Cash on Delivery" checked>
+      Cash on Delivery
+    </label>
+
+    <label>
+      <input type="radio" name="payment" value="UPI">
+      UPI Payment
+    </label>
+
+    <label>
+      <input type="radio" name="payment" value="Card Payment">
+      Card Payment
+    </label>
+  </div>
+
+  <div id="upiDetails" class="upi-details">
+    <input type="text" id="upiId" placeholder="Enter UPI ID">
+    <input type="tel" id="upiNumber" placeholder="Enter UPI Mobile Number">
+
+    <h3>OR</h3>
+    <p>Scan QR Code</p>
+
+    <img src="/website images/payment-qr.png" class="upi-qr" alt="UPI QR Code">
+  </div>
+
+  <div id="cardDetails" class="card-details">
+    <input type="text" id="cardNumber" placeholder="Card Number">
+    <input type="text" id="cardName" placeholder="Card Holder Name">
+    <input type="month" id="expiryDate">
+    <input type="password" id="cvv" placeholder="CVV">
+  </div>
+
+  <div class="checkout-total">
+    Payable Amount: ₹<span id="paymentTotal">0</span>
+  </div>
+
+  <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+</section>
+
+<script src="/script.js"></script>
+</body>
+</html>

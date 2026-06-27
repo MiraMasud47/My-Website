@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Elite Food</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<section class="login-page">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            <img src="/website images/Royal Spice.png" alt="Royal Spice Logo">
+        </div>
+
+        <p class="small-title">Join Elite Food</p>
+
+        <h1>Create Account</h1>
+
+        <form onsubmit="signupUser(event)">
+
+            <div class="input-box">
+                <input type="text" id="signupName" required>
+                <label>Full Name</label>
+            </div>
+
+            <div class="input-box">
+                <input type="email" id="signupEmail" required>
+                <label>Email Address</label>
+            </div>
+
+            <div class="input-box">
+                <input type="tel" id="signupPhone" required>
+                <label>Mobile Number</label>
+            </div>
+
+            <div class="input-box password-box">
+                <input type="password" id="signupPassword" required>
+                <label>Password</label>
+
+                <span onclick="toggleSignupPassword()">👁</span>
+            </div>
+
+            <div class="input-box password-box">
+                <input type="password" id="confirmPassword" required>
+                <label>Confirm Password</label>
+            </div>
+
+            <button type="submit" class="login-btn">
+
+                CREATE ACCOUNT
+
+            </button>
+
+            <p class="signup-text">
+
+                Already have an account?
+
+                <a href="login.html">Login</a>
+
+            </p>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script src="/script.js"></script>
+
+</body>
+</html>

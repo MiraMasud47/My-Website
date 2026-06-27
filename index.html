@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Spice</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <a href="#home">
+      <img src="website images/Royal Spice.png" alt="Royal Spice Logo">
+    </a>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="login.html" id="loginLink">Login</a>
+
+<a href="#" id="logoutLink"
+   onclick="logoutUser()"
+   style="display:none;">
+   Logout
+</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="small-title">Premium Dining Experience</p>
+
+    <h1>
+      Crafted Flavors,<br>
+      Delivered Fresh
+    </h1>
+
+    <p class="hero-text">
+      Enjoy luxury restaurant-style food with fast delivery and elite taste.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#menu" class="btn gold">
+        View Menu
+      </a>
+
+      <button class="btn dark" onclick="toggleCart()">
+        🛒 Your Cart (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div>🚚 Fast Delivery</div>
+  <div>🍽 Premium Taste</div>
+  <div>⭐ Elite Quality</div>
+</section>
+
+<section class="menu-section" id="menu">
+
+  <div class="section-title">
+    <p>Our Signature Menu</p>
+    <h2>Popular Dishes</h2>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search your dish..."
+    >
+  </div>
+
+  <div class="filters">
+    <button onclick="filterItems('all')">All</button>
+    <button onclick="filterItems('biryani')">Biryani</button>
+    <button onclick="filterItems('chicken')">Chicken</button>
+    <button onclick="filterItems('paneer')">Paneer</button>
+    <button onclick="filterItems('drinks')">Drinks</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid"></div>
+
+</section>
+
+<section class="about" id="about">
+
+  <div>
+    <p class="small-title">Why Choose Us</p>
+
+    <h2>Luxury Taste With Modern Experience</h2>
+
+    <p>
+      Royal Spice gives you restaurant-style dishes,
+      premium packaging,
+      smooth ordering,
+      and delicious flavors.
+    </p>
+  </div>
+
+</section>
+
+<!-- CART PANEL -->
+
+<div class="cart-panel" id="cartPanel">
+
+  <div class="cart-header">
+
+    <h2>🛒 Your Cart</h2>
+
+    <button onclick="toggleCart()">
+      ✕
+    </button>
+
+  </div>
+
+  <div id="cartItems">
+
+    <p>Your cart is empty.</p>
+
+  </div>
+
+  <div class="cart-bottom">
+
+    <h3>
+      Total : ₹<span id="totalPrice">0</span>
+    </h3>
+
+    <button
+      class="checkout-btn"
+      onclick="goToCheckout()">
+
+      Checkout
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
