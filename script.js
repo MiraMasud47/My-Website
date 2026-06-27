@@ -1,7 +1,7 @@
 const foods = [
   {
     id: 1,
-    name: "Hyderabadi Chicken Biryani",
+    name: "Hyderabadi-Chicken-Biryani",
     category: "biryani",
     price: 249,
     desc: "Aromatic rice with royal spices.",
@@ -9,7 +9,7 @@ const foods = [
   },
   {
     id: 2,
-    name: "Butter Chicken",
+    name: "Butter-Chicken",
     category: "chicken",
     price: 299,
     desc: "Creamy, rich and full of flavor.",
@@ -17,7 +17,7 @@ const foods = [
   },
   {
     id: 3,
-    name: "Paneer Khurchan Roll",
+    name: "Paneer-Khurchan-Roll",
     category: "paneer",
     price: 159,
     desc: "Soft paneer with spicy filling.",
@@ -25,7 +25,7 @@ const foods = [
   },
   {
     id: 4,
-    name: "Chilly Chicken Dry",
+    name: "Chilly-Chicken-Dry",
     category: "chicken",
     price: 229,
     desc: "Crispy chicken with spicy sauce.",
@@ -33,7 +33,7 @@ const foods = [
   },
   {
     id: 5,
-    name: "Soft Drinks",
+    name: "Soft-Drinks",
     category: "drinks",
     price: 79,
     desc: "Refreshing chilled drinks.",
@@ -41,7 +41,7 @@ const foods = [
   },
   {
     id: 6,
-    name: "Zafrani Malai Kofta",
+    name: "Zafrani-Malai-Kofta",
     category: "paneer",
     price: 269,
     desc: "Royal creamy kofta curry.",
