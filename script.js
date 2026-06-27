@@ -1,51 +1,51 @@
 const foods = [
   {
     id: 1,
-    name: "Hyderabadi-Chicken-Biryani",
+    name: "Hyderabadi Chicken Biryani",
     category: "biryani",
     price: 249,
     desc: "Aromatic rice with royal spices.",
-    image: "/website images/Hydrabadi Chicken Biryani.png"
+    image: "/website images/Hydrabadi-Chicken-Biryani.png"
   },
   {
     id: 2,
-    name: "Butter-Chicken",
+    name: "Butter Chicken",
     category: "chicken",
     price: 299,
     desc: "Creamy, rich and full of flavor.",
-    image: "/website images/Butter Chicken.png"
+    image: "/website images/Butter-Chicken.png"
   },
   {
     id: 3,
-    name: "Paneer-Khurchan-Roll",
+    name: "Paneer Khurchan Roll",
     category: "paneer",
     price: 159,
     desc: "Soft paneer with spicy filling.",
-    image: "/website images/Paneer Khurchan Roll.png"
+    image: "/website images/Paneer-Khurchan-Roll.png"
   },
   {
     id: 4,
-    name: "Chilly-Chicken-Dry",
+    name: "Chilly Chicken Dry",
     category: "chicken",
     price: 229,
     desc: "Crispy chicken with spicy sauce.",
-    image: "/website images/Chilly Chicken Dry.png"
+    image: "/website images/Chilly-Chicken-Dry.png"
   },
   {
     id: 5,
-    name: "Soft-Drinks",
+    name: "Soft Drinks",
     category: "drinks",
     price: 79,
     desc: "Refreshing chilled drinks.",
-    image: "/website images/Soft Drinks.png"
+    image: "/website images/Soft-Drinks.png"
   },
   {
     id: 6,
-    name: "Zafrani-Malai-Kofta",
+    name: "Zafrani Malai Kofta",
     category: "paneer",
     price: 269,
     desc: "Royal creamy kofta curry.",
-    image: "/website images/Zafrani Malai Kofta.png"
+    image: "/website images/Zafrani-Malai-Kofta.png"
   }
 ];
 
