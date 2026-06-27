@@ -1,11 +1,11 @@
 const foods = [
   {
     id: 1,
-    name: "Hyderabadi Chicken Biryani",
+    name: "Hydrabadi Chicken Biryani",
     category: "biryani",
     price: 249,
     desc: "Aromatic rice with royal spices.",
-    image: "./Website-images/Hyderabadi-Chicken-Biryani.png"
+    image: "./Website-images/Hydrabadi-Chicken-Biryani.png"
   },
   {
     id: 2,
