@@ -5,7 +5,7 @@ const foods = [
     category: "biryani",
     price: 249,
     desc: "Aromatic rice with royal spices.",
-    image: "/website-images/Hydrabadi-Chicken-Biryani.png"
+    image: "./website-images/Hyderabadi-Chicken-Biryani.png"
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ const foods = [
     category: "chicken",
     price: 299,
     desc: "Creamy, rich and full of flavor.",
-    image: "/website-images/Butter-Chicken.png"
+    image: "./website-images/Butter-Chicken.png"
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ const foods = [
     category: "paneer",
     price: 159,
     desc: "Soft paneer with spicy filling.",
-    image: "/website-images/Paneer-Khurchan-Roll.png"
+    image: "./website-images/Paneer-Khurchan-Roll.png"
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ const foods = [
     category: "chicken",
     price: 229,
     desc: "Crispy chicken with spicy sauce.",
-    image: "/website-images/Chilly-Chicken-Dry.png"
+    image: "./website-images/Chill-Chicken-Dry.png"
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ const foods = [
     category: "drinks",
     price: 79,
     desc: "Refreshing chilled drinks.",
-    image: "/website-images/Soft-Drinks.png"
+    image: "./website-images/Soft-Drinks.png"
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ const foods = [
     category: "paneer",
     price: 269,
     desc: "Royal creamy kofta curry.",
-    image: "/website-images/Zafrani-Malai-Kofta.png"
+    image: "./website-images/Zafrani-Malai-Kofta.png"
   }
 ];
 
