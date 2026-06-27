@@ -44,9 +44,9 @@ def js():
     return send_from_directory(".", "script.js")
 
 
-@app.route("/website images/<path:filename>")
+@app.route("/website-images/<path:filename>")
 def website_images(filename):
-    return send_from_directory("website images", filename)
+    return send_from_directory("website-images", filename)
 
 @app.route("/login.html")
 def login():
