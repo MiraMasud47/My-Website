@@ -10,18 +10,22 @@ body {
   color: white;
 }
 
-header {
+
+header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
   width: 100%;
-  padding: 22px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10, 10, 10, 0.9);
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  height: 2px;
+
+  background: linear-gradient(90deg,
+      transparent,
+      #D4AF37,
+      #FFD700,
+      #D4AF37,
+      transparent);
 }
 
 .logo img {
@@ -929,7 +933,7 @@ header {
 }
 
 nav a {
-  color:#D4AF37;
+  color: #D4AF37;
   font-weight: 600;
   text-shadow: 0 2px 8px rgba(0, 0, 0, .8);
   transition: .3s;
@@ -1040,5 +1044,120 @@ nav a:hover {
 
   .cart-panel.active {
     right: 0;
+  }
+}
+
+/* ===============================
+   FINAL FIXED NAVBAR OVERRIDE
+   Paste-safe: keeps navbar locked at top
+================================ */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  padding-top: 0 !important;
+}
+
+body > header,
+header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  min-height: 90px !important;
+
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+
+  padding: 10px 8% !important;
+
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+
+  border: none !important;
+  box-shadow: none !important;
+
+  transform: none !important;
+  translate: none !important;
+
+  z-index: 999999 !important;
+}
+
+body > header::after,
+header::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: 2px !important;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #D4AF37,
+    #FFD700,
+    #D4AF37,
+    transparent
+  ) !important;
+}
+
+/* Hero ko navbar ke niche proper start karne ke liye */
+.hero {
+  padding-top: 130px !important;
+}
+
+/* Mobile navbar should stay fixed too */
+@media (max-width: 768px) {
+  body > header,
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    min-height: 135px !important;
+
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    padding: 10px 16px !important;
+    gap: 10px !important;
+
+    z-index: 999999 !important;
+  }
+
+  nav {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    gap: 16px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+  }
+
+  nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  nav a,
+  nav button {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  .hero {
+    padding-top: 190px !important;
   }
 }

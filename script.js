@@ -257,25 +257,35 @@ const checkoutItems = document.getElementById("checkoutItems");
 const checkoutTotal = document.getElementById("checkoutTotal");
 
 function showCheckout() {
+  const checkoutItems = document.getElementById("checkoutItems");
+  const checkoutTotal = document.getElementById("checkoutTotal");
+
   if (!checkoutItems || !checkoutTotal) return;
+
+  const checkoutCart = JSON.parse(localStorage.getItem("eliteCart")) || [];
 
   checkoutItems.innerHTML = "";
 
   let total = 0;
 
-  if (cart.length === 0) {
+  if (checkoutCart.length === 0) {
     checkoutItems.innerHTML = `<p>Your cart is empty</p>`;
+    checkoutTotal.innerText = "0";
+    return;
   }
 
-  cart.forEach(item => {
-    total += item.price * item.qty;
+  checkoutCart.forEach(item => {
+    const qty = item.qty || 1;
+    const subtotal = item.price * qty;
+
+    total += subtotal;
 
     checkoutItems.innerHTML += `
       <div class="cart-item">
         <h4>${item.name}</h4>
         <p>Price: ₹${item.price}</p>
-        <p>Quantity: ${item.qty}</p>
-        <p>Subtotal: ₹${item.price * item.qty}</p>
+        <p>Quantity: ${qty}</p>
+        <p>Subtotal: ₹${subtotal}</p>
       </div>
     `;
   });

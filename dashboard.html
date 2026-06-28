@@ -1,197 +1,246 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Food Dashboard - Royal Spice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Food Dashboard - Royal Spice</title>
+
+    <link rel="icon" href="./Website-images/Royal-Spice.png">
     <link rel="stylesheet" href="style.css">
 
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #fff7ef;
-            color: #222;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, .18), transparent 35%),
+                linear-gradient(135deg, #080808, #1a120b, #080808);
+            color: #111;
+            min-height: 100vh;
         }
 
         .food-header {
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 9999;
 
-            background: #160f0a;
-            color: white;
+            height: 70px;
+            /* pehle 86px tha */
+            padding: 0 5%;
+            /* pehle 0 7% tha */
+
+            background: rgba(10, 10, 10, .92);
+            backdrop-filter: blur(14px);
 
             display: flex;
             justify-content: space-between;
             align-items: center;
 
-            padding: 10px 5%;
-            height: 70px;
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, .25);
+            border-bottom: 2px solid #d4af37;
         }
 
         .logo-box {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            color: #d4af37;
             font-size: 24px;
-            font-weight: bold;
-            color: #f6b647;
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            font-size: 18px;
-            font-weight: 700;
-            color: #f6b647;
+            font-weight: 800;
         }
 
         .logo-box img {
-            width: 42px;
-            height: 42px;
+            width: 50px;
+            height: 50px;
             object-fit: contain;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
         }
 
         .food-header a,
         .food-header button {
-
-            text-decoration: none;
             border: none;
-
-            background: #f6b647;
+            text-decoration: none;
+            background: linear-gradient(135deg, #f7e08a, #d4af37, #b8860b);
             color: #111;
-
-            padding: 8px 18px;
+            padding: 12px 26px;
             border-radius: 30px;
-
-            font-size: 14px;
-            font-weight: 600;
-
+            font-size: 15px;
+            font-weight: 800;
             cursor: pointer;
             transition: .3s;
         }
 
         .food-header a:hover,
         .food-header button:hover {
-
-            background: #ffcc66;
-            transform: translateY(-2px);
-
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, .35);
         }
 
         .hero-dash {
-            padding: 30px 5%;
-            background: linear-gradient(135deg, #2a1408, #7a2e00);
+            padding: 180px 7%;
+            background:
+                linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .82)),
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
+            background-size: cover;
+            background-position: center;
             color: white;
             display: flex;
             justify-content: space-between;
-            gap: 25px;
             align-items: center;
+            gap: 30px;
         }
 
         .hero-dash h1 {
-            font-size: 42px;
-            margin: 0 0 10px;
+            font-size: 54px;
+            color: #d4af37;
+            margin-bottom: 14px;
         }
 
         .hero-dash p {
-            color: #ffe6c7;
-            font-size: 18px;
+            color: #eee;
+            font-size: 20px;
+            max-width: 620px;
         }
 
         .order-now {
-            background: #f6b647;
+            display: inline-block;
+            background: linear-gradient(135deg, #f7e08a, #d4af37, #b8860b);
             color: #111;
-            padding: 15px 30px;
-            border-radius: 30px;
+            padding: 16px 36px;
+            border-radius: 35px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 900;
+            white-space: nowrap;
+            transition: .3s;
+        }
+
+        .order-now:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, .35);
         }
 
         .dashboard {
             width: 88%;
-            margin: 30px auto;
+            margin: 45px auto 70px;
         }
 
         .quick-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 26px;
         }
 
         .quick-card {
-            background: white;
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
-            border: 1px solid #ffe0b8;
+            background: rgba(255, 255, 255, .96);
+            border: 1px solid rgba(212, 175, 55, .35);
+            border-radius: 26px;
+            padding: 30px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
+            transition: .3s;
         }
 
-        .quick-card h2 {
-            margin: 10px 0;
+        .quick-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 55px rgba(212, 175, 55, .18);
         }
 
         .quick-card span {
-            font-size: 35px;
+            font-size: 46px;
+        }
+
+        .quick-card h2 {
+            margin: 14px 0 8px;
+            font-size: 28px;
+        }
+
+        .quick-card p {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .quick-card a {
+            color: #b8860b;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         .section-title {
-            margin: 35px 0 18px;
-            font-size: 28px;
+            margin: 58px 0 28px;
+            font-size: 38px;
+            text-align: center;
+            color: #d4af37;
         }
 
         .food-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         .dish-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 26px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+            border: 1px solid rgba(212, 175, 55, .35);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
+            transition: .3s;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-8px);
         }
 
         .dish-card img {
             width: 100%;
-            height: 170px;
+            height: 230px;
             object-fit: cover;
         }
 
         .dish-info {
-            padding: 18px;
+            padding: 24px;
         }
 
         .dish-info h3 {
-            margin: 0 0 8px;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
 
         .dish-info p {
             color: #666;
+            line-height: 1.5;
         }
 
         .dish-info a {
             display: inline-block;
-            background: #160f0a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
+            margin-top: 16px;
+            background: #111;
+            color: #d4af37;
+            padding: 12px 25px;
+            border-radius: 30px;
             text-decoration: none;
-            margin-top: 8px;
+            font-weight: 800;
         }
 
-        .order-box {
+        .order-box,
+        .coupon {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
-            margin-top: 20px;
+            border-radius: 26px;
+            padding: 30px;
+            border: 1px solid rgba(212, 175, 55, .35);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
         }
 
         .order-row {
@@ -199,31 +248,42 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #eee;
-            padding: 16px 0;
+            padding: 20px 0;
         }
 
         .order-row:last-child {
             border-bottom: none;
         }
 
+        .order-row h3 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .order-row p {
+            color: #666;
+        }
+
         .status {
             background: #e7f9ee;
             color: #087b39;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 800;
         }
 
         .coupon {
-            margin-top: 25px;
-            background: #fff0d1;
-            border: 2px dashed #f6b647;
-            padding: 25px;
-            border-radius: 20px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #fff0d1, #fff8ea);
+            border: 2px dashed #d4af37;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 22px;
+        }
+
+        .coupon h2 {
+            margin-bottom: 8px;
         }
 
         .coupon b {
@@ -231,13 +291,38 @@
         }
 
         @media(max-width:700px) {
+            .food-header {
+                height: auto;
+                padding: 16px;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .logo-box img {
+                width: 52px;
+                height: 52px;
+            }
+
             .hero-dash {
+                padding: 45px 22px;
                 flex-direction: column;
                 align-items: flex-start;
             }
 
             .hero-dash h1 {
-                font-size: 32px;
+                font-size: 36px;
+            }
+
+            .hero-dash p {
+                font-size: 17px;
+            }
+
+            .dashboard {
+                width: 92%;
+            }
+
+            .section-title {
+                font-size: 30px;
             }
 
             .order-row,
@@ -247,6 +332,7 @@
             }
         }
     </style>
+
 </head>
 
 <body>
@@ -257,10 +343,13 @@
             Royal Spice
         </div>
 
-        <div>
+        ```
+        <div class="nav-actions">
             <a href="index.html">Home</a>
             <button onclick="logoutUser()">Logout</button>
         </div>
+        ```
+
     </header>
 
     <section class="hero-dash">
@@ -269,11 +358,15 @@
             <p>Welcome back! Your favourite spicy dishes are waiting for you.</p>
         </div>
 
+        ```
         <a href="index.html#menu" class="order-now">Order Food Now</a>
+        ```
+
     </section>
 
     <main class="dashboard">
 
+        ```
         <div class="quick-grid">
             <div class="quick-card">
                 <span>📦</span>
@@ -391,10 +484,12 @@
 
             <a class="order-now" href="index.html#menu">Use Offer</a>
         </div>
+        ```
 
     </main>
 
     <script src="script.js"></script>
+
     <script>
         const user = JSON.parse(localStorage.getItem("eliteUser"));
         const orders = JSON.parse(localStorage.getItem("eliteOrders")) || [];
