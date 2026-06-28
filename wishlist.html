@@ -10,330 +10,366 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            background: #f5f5f5;
+            min-height: 100vh;
             font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, .18), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(255, 152, 0, .14), transparent 35%),
+                linear-gradient(135deg, #070707, #1a120b, #070707);
+            color: white;
         }
 
         header {
-            background: #111;
-            color: white;
-            padding: 15px 8%;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 18px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, .25);
         }
 
-        header a {
-            color: white;
+        header h2 {
+            color: #d4af37;
+            font-size: 34px;
+            margin: 0;
+            font-weight: 800;
+        }
+
+        header nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        header nav a {
+            color: #f7e08a !important;
             text-decoration: none;
-            margin-left: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        header nav a::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        header nav a:hover {
+            color: #ffffff !important;
         }
 
         .wishlist-container {
             max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
+            margin: 0 auto;
+            padding: 70px 22px;
         }
 
         .wishlist-title {
-            font-size: 35px;
-            margin-bottom: 30px;
-            color: #ff9800;
-            margin-bottom: 60px;
-            margin-top: 40px;
+            text-align: center;
+            font-size: 48px;
+            color: #d4af37;
+            margin: 0 0 55px;
+            font-weight: 800;
+        }
+
+        .wishlist-subtitle {
+            text-align: center;
+            color: #ddd;
+            margin-top: -35px;
+            margin-bottom: 50px;
+            font-size: 18px;
         }
 
         .wishlist-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
+            justify-content: center;
+            gap: 30px;
         }
 
         .wishlist-card {
-            background: white;
-            border-radius: 15px;
+            width: 320px;
+            max-width: 100%;
+            margin: auto;
+            background: rgba(20, 20, 20, .92);
+            border: 1px solid rgba(212, 175, 55, .28);
+            border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
-            transition: .3s;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+            transition: .35s ease;
         }
 
         .wishlist-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
+            box-shadow: 0 22px 60px rgba(212, 175, 55, .16);
         }
 
         .wishlist-card img {
             width: 100%;
             height: 220px;
             object-fit: cover;
+            display: block;
         }
 
         .wishlist-info {
-            padding: 20px;
+            padding: 22px;
         }
 
         .wishlist-info h3 {
-            margin: 0;
-            margin-bottom: 10px;
+            color: #fff;
+            margin: 0 0 10px;
+            font-size: 23px;
         }
 
         .wishlist-info p {
-            color: #666;
+            color: #bbb;
+            line-height: 1.6;
+            margin: 0;
         }
 
         .price {
-            font-size: 24px;
-            color: #ff9800;
+            font-size: 26px;
+            color: #d4af37;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 18px 0;
         }
 
         .btn-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .cart-btn,
+        .remove-btn {
+            flex: 1;
+            border: none;
+            padding: 13px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: .3s ease;
         }
 
         .cart-btn {
-
-            flex: 1;
-            border: none;
-            padding: 12px;
-            background: #ff9800;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .remove-btn {
-
-            flex: 1;
-            border: none;
-            padding: 12px;
-            background: #e53935;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        #wishlistGrid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-        }
-
-        .empty {
-            text-align: center;
+            background: linear-gradient(135deg, #f7e08a, #d4af37, #b8860b);
             color: #111;
         }
 
-        .empty h2 {
-            font-size: 35px;
-            margin-bottom: 20px;
+        .remove-btn {
+            background: #2a2a2a;
+            color: #ff7777;
+            border: 1px solid rgba(255, 119, 119, .35);
         }
 
-        .empty-cart {
+        .cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(212, 175, 55, .28);
+        }
+
+        .remove-btn:hover {
+            background: #e53935;
+            color: white;
+        }
+
+        #wishlistGrid.empty-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 48vh;
+        }
+
+        .empty {
+            width: 100%;
+            max-width: 560px;
+            background: rgba(20, 20, 20, .92);
+            border: 1px solid rgba(212, 175, 55, .35);
+            border-radius: 28px;
+            padding: 55px 45px;
             text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            color: #666;
-            margin-top: 50px;
+            color: white;
+            box-shadow: 0 22px 70px rgba(0, 0, 0, .5);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 12px;
+        }
+
+        .empty h2 {
+            font-size: 34px;
+            color: #d4af37;
+            margin: 0 0 15px;
+        }
+
+        .empty p {
+            color: #ddd;
+            font-size: 17px;
+            margin: 0;
         }
 
         .empty a {
-
             display: inline-block;
-            margin-top: 25px;
-            background: #ff9800;
-            color: white;
-            padding: 14px 30px;
-            border-radius: 8px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #f7e08a, #d4af37, #b8860b);
+            color: #111;
+            padding: 15px 34px;
+            border-radius: 30px;
             text-decoration: none;
+            font-weight: 800;
+        }
+
+        @media(max-width:768px) {
+            header {
+                flex-direction: column;
+                gap: 14px;
+                padding: 16px;
+            }
+
+            header h2 {
+                font-size: 28px;
+            }
+
+            header nav {
+                gap: 22px;
+            }
+
+            header nav a {
+                font-size: 16px;
+            }
+
+            .wishlist-container {
+                padding: 50px 18px;
+            }
+
+            .wishlist-title {
+                font-size: 34px;
+            }
+
+            .wishlist-subtitle {
+                font-size: 15px;
+            }
+
+            .empty {
+                padding: 42px 22px;
+            }
+
+            .empty h2 {
+                font-size: 28px;
+            }
         }
     </style>
-
 </head>
 
 <body>
 
     <header>
-
         <h2>❤️ My Wishlist</h2>
 
         <nav>
-
             <a href="index.html">Home</a>
-
             <a href="checkout.html">Checkout</a>
-
         </nav>
-
     </header>
 
-
     <div class="wishlist-container">
+        <h1 class="wishlist-title">❤️ Favourite Dishes</h1>
+        <p class="wishlist-subtitle">Your saved Royal Spice favourites are here.</p>
 
-        <h1 class="wishlist-title">
-            ❤️ Favourite Dishes
-        </h1>
-
-        <div class="wishlist-grid" id="wishlistGrid">
-
-        </div>
-
+        <div class="wishlist-grid" id="wishlistGrid"></div>
     </div>
 
-
     <script>
+        let wishlist = JSON.parse(localStorage.getItem("eliteWishlist")) || [];
+        let cart = JSON.parse(localStorage.getItem("eliteCart")) || [];
 
-        let wishlist =
-            JSON.parse(localStorage.getItem("eliteWishlist")) || [];
-
-        let cart =
-            JSON.parse(localStorage.getItem("eliteCart")) || [];
-
-        const grid =
-            document.getElementById("wishlistGrid");
-
+        const grid = document.getElementById("wishlistGrid");
 
         function showWishlist() {
-
             if (wishlist.length === 0) {
+                grid.classList.add("empty-center");
 
                 grid.innerHTML = `
-
-        <div class="empty">
-
-        <h2>❤️ Your Wishlist is Empty</h2>
-
-        <p>Add your favourite dishes.</p>
-
-        <a href="index.html">
-
-        Continue Shopping
-
-        </a>
-
-        </div>
-
+          <div class="empty">
+            <div class="empty-icon">🍽️</div>
+            <h2>Your Wishlist is Empty</h2>
+            <p>Add your favourite dishes and order them anytime.</p>
+            <a href="index.html">Explore Menu</a>
+          </div>
         `;
-
                 return;
-
             }
 
+            grid.classList.remove("empty-center");
             grid.innerHTML = "";
 
             wishlist.forEach(food => {
-
                 grid.innerHTML += `
-
-        <div class="wishlist-card">
-
-            <img src="${food.image}">
+          <div class="wishlist-card">
+            <img src="${food.image}" alt="${food.name}">
 
             <div class="wishlist-info">
+              <h3>${food.name}</h3>
+              <p>${food.desc || ""}</p>
 
-                <h3>${food.name}</h3>
+              <div class="price">₹${food.price}</div>
 
-                <p>${food.desc}</p>
+              <div class="btn-group">
+                <button class="cart-btn" onclick="addCart(${food.id})">
+                  🛒 Add
+                </button>
 
-                <div class="price">
-
-                ₹${food.price}
-
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="cart-btn"
-                    onclick="addCart(${food.id})">
-
-                    🛒 Add
-
-                    </button>
-
-                    <button class="remove-btn"
-                    onclick="removeWishlist(${food.id})">
-
-                    Remove
-
-                    </button>
-
-                </div>
-
+                <button class="remove-btn" onclick="removeWishlist(${food.id})">
+                  Remove
+                </button>
+              </div>
             </div>
-
-        </div>
-
+          </div>
         `;
-
             });
-
         }
-
 
         function removeWishlist(id) {
-
-            wishlist =
-                wishlist.filter(item => item.id !== id);
-
-            localStorage.setItem(
-                "eliteWishlist",
-                JSON.stringify(wishlist)
-            );
-
+            wishlist = wishlist.filter(item => item.id !== id);
+            localStorage.setItem("eliteWishlist", JSON.stringify(wishlist));
             showWishlist();
-
         }
 
-
         function addCart(id) {
+            const product = wishlist.find(item => item.id === id);
 
-            const product =
-                wishlist.find(item => item.id === id);
+            if (!product) {
+                alert("Product not found");
+                return;
+            }
 
-            const exist =
-                cart.find(item => item.id === id);
+            const exist = cart.find(item => item.id === id);
 
             if (exist) {
-
                 exist.qty++;
-
-            }
-
-            else {
-
+            } else {
                 cart.push({
-
                     id: product.id,
-
                     name: product.name,
-
                     price: product.price,
-
                     image: product.image,
-
                     qty: 1
-
                 });
-
             }
 
-            localStorage.setItem(
-                "eliteCart",
-                JSON.stringify(cart)
-            );
-
+            localStorage.setItem("eliteCart", JSON.stringify(cart));
             alert("Added to Cart");
-
         }
 
         showWishlist();
-
     </script>
 
 </body>
