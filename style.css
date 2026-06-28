@@ -929,8 +929,14 @@ header {
 }
 
 nav a {
-  color: white;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, .9);
+  color:#D4AF37;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .8);
+  transition: .3s;
+}
+
+nav a:hover {
+  color: #D4AF37;
 }
 
 .logo img {
@@ -963,6 +969,7 @@ nav a {
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
+    padding-right: 20px;
   }
 
   nav::-webkit-scrollbar {
