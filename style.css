@@ -16,17 +16,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(10,10,10,0.9);
+  background: rgba(10, 10, 10, 0.9);
   position: fixed;
   top: 0;
   z-index: 1000;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(212,175,55,0.25);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
 }
 
-.logo img{
-    height: 80px;
-    width: auto;
+.logo img {
+  height: 80px;
+  width: auto;
 }
 
 .logo span {
@@ -57,7 +57,7 @@ nav a:hover {
 .hero {
   min-height: 100vh;
   background:
-    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.8)),
+    linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.8)),
     url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
   background-size: cover;
   background-position: center;
@@ -126,7 +126,7 @@ nav a:hover {
 .features div {
   padding: 25px;
   background: #171717;
-  border: 1px solid rgba(212,175,55,0.25);
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 18px;
   text-align: center;
   font-size: 20px;
@@ -178,7 +178,7 @@ nav a:hover {
   padding: 11px 22px;
   background: #171717;
   color: white;
-  border: 1px solid rgba(212,175,55,0.45);
+  border: 1px solid rgba(212, 175, 55, 0.45);
   border-radius: 25px;
   cursor: pointer;
 }
@@ -198,13 +198,13 @@ nav a:hover {
   background: #151515;
   border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(212,175,55,0.22);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   transition: 0.3s;
 }
 
 .food-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 45px rgba(212,175,55,0.15);
+  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.15);
 }
 
 .food-card img {
@@ -245,7 +245,7 @@ nav a:hover {
   font-size: 22px;
   cursor: pointer;
   z-index: 5;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .price-row {
@@ -407,6 +407,7 @@ html {
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -444,12 +445,10 @@ html {
   left: -120%;
   width: 80%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.5),
-    transparent
-  );
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent);
   transition: 0.6s;
 }
 
@@ -470,6 +469,7 @@ html {
     opacity: 0;
     transform: scale(0.92) translateY(25px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -483,16 +483,17 @@ html {
 
 @keyframes glowText {
   from {
-    text-shadow: 0 0 10px rgba(212,175,55,0.2);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
   }
+
   to {
-    text-shadow: 0 0 25px rgba(212,175,55,0.6);
+    text-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
   }
 }
 
 /* Cart panel smooth */
 .cart-panel {
-  box-shadow: -20px 0 50px rgba(0,0,0,0.6);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.6);
 }
 
 /* Navbar link underline animation */
@@ -544,7 +545,7 @@ nav a:hover::after {
   padding: 16px 20px;
   margin-bottom: 15px;
   border-radius: 14px;
-  border: 1px solid rgba(212,175,55,0.5);
+  border: 1px solid rgba(212, 175, 55, 0.5);
   background: #111;
   color: white;
   outline: none;
@@ -558,7 +559,7 @@ nav a:hover::after {
 .payment-box {
   max-width: 550px;
   background: #151515;
-  border: 1px solid rgba(212,175,55,0.3);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 20px;
   padding: 25px;
   margin-bottom: 25px;
@@ -581,7 +582,7 @@ nav a:hover::after {
 .success-page {
   min-height: 100vh;
   background:
-    linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.9)),
+    linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .9)),
     url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
   background-size: cover;
   background-position: center;
@@ -605,8 +606,8 @@ nav a:hover::after {
 }
 
 .success-box {
-  background: rgba(20,20,20,0.9);
-  border: 1px solid rgba(212,175,55,0.4);
+  background: rgba(20, 20, 20, 0.9);
+  border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 22px;
   padding: 25px;
   margin: 30px 0;
@@ -629,12 +630,10 @@ nav a:hover::after {
   text-transform: uppercase;
   cursor: pointer;
 
-  background: linear-gradient(
-    135deg,
-    #f7e08a 0%,
-    #d4af37 50%,
-    #b8860b 100%
-  );
+  background: linear-gradient(135deg,
+      #f7e08a 0%,
+      #d4af37 50%,
+      #b8860b 100%);
 
   color: #111;
   position: relative;
@@ -642,8 +641,8 @@ nav a:hover::after {
   transition: all .4s ease;
 
   box-shadow:
-    0 5px 15px rgba(212,175,55,.25),
-    inset 0 1px 0 rgba(255,255,255,.4);
+    0 5px 15px rgba(212, 175, 55, .25),
+    inset 0 1px 0 rgba(255, 255, 255, .4);
 
   animation: eliteGlow 2.5s infinite alternate;
 }
@@ -652,8 +651,8 @@ nav a:hover::after {
   transform: translateY(-5px) scale(1.02);
 
   box-shadow:
-    0 15px 35px rgba(212,175,55,.45),
-    0 0 20px rgba(212,175,55,.35);
+    0 15px 35px rgba(212, 175, 55, .45),
+    0 0 20px rgba(212, 175, 55, .35);
 }
 
 .buy-now-btn:active {
@@ -668,12 +667,10 @@ nav a:hover::after {
   width: 60%;
   height: 100%;
 
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,.7),
-    transparent
-  );
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(255, 255, 255, .7),
+      transparent);
 
   transition: .8s;
 }
@@ -684,10 +681,11 @@ nav a:hover::after {
 
 @keyframes eliteGlow {
   from {
-    box-shadow: 0 5px 15px rgba(212,175,55,.2);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, .2);
   }
+
   to {
-    box-shadow: 0 10px 30px rgba(212,175,55,.45);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, .45);
   }
 }
 
@@ -710,26 +708,26 @@ nav a:hover::after {
 }
 
 .upi-qr {
-    width: 220px;
-    height: 220px;
-    object-fit: contain;
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
 
-    background: #ffffff;
-    padding: 15px;
+  background: #ffffff;
+  padding: 15px;
 
-    border-radius: 20px;
-    border: 3px solid #d4af37;
+  border-radius: 20px;
+  border: 3px solid #d4af37;
 
-    display: block;
-    margin: 20px auto;
+  display: block;
+  margin: 20px auto;
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .login-page {
   min-height: 100vh;
   background:
-    linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.9)),
+    linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .9)),
     url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
   background-size: cover;
   background-position: center;
@@ -742,20 +740,20 @@ nav a:hover::after {
 .login-card {
   width: 100%;
   max-width: 430px;
-  background: rgba(17,17,17,.88);
-  border: 1px solid rgba(212,175,55,.45);
+  background: rgba(17, 17, 17, .88);
+  border: 1px solid rgba(212, 175, 55, .45);
   border-radius: 28px;
   padding: 35px;
   text-align: center;
   backdrop-filter: blur(15px);
-  box-shadow: 0 25px 60px rgba(0,0,0,.7);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, .7);
   animation: fadeSlide 1s ease;
 }
 
 .login-logo img {
   width: 120px;
   margin-bottom: 20px;
-  filter: drop-shadow(0 0 18px rgba(212,175,55,.45));
+  filter: drop-shadow(0 0 18px rgba(212, 175, 55, .45));
 }
 
 .login-card h1 {
@@ -766,72 +764,72 @@ nav a:hover::after {
 
 /* Login Button */
 
-.login-btn-nav{
-    display:inline-block;
-    text-decoration:none;
-    background:linear-gradient(135deg,#ff4b2b,#ff416c);
-    color:#fff;
-    padding:12px 28px;
-    border-radius:30px;
-    font-size:16px;
-    font-weight:600;
-    transition:.3s;
-    box-shadow:0 8px 20px rgba(255,65,108,.35);
+.login-btn-nav {
+  display: inline-block;
+  text-decoration: none;
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: .3s;
+  box-shadow: 0 8px 20px rgba(255, 65, 108, .35);
 }
 
-.login-btn-nav:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 25px rgba(255,65,108,.45);
+.login-btn-nav:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 65, 108, .45);
 }
 
-.login-btn-nav:active{
-    transform:scale(.97);
+.login-btn-nav:active {
+  transform: scale(.97);
 }
 
 /* Logout Button */
 
-.logout-btn{
-    background:linear-gradient(135deg,#ff4b2b,#ff416c);
-    color:#fff;
-    border:none;
-    padding:12px 28px;
-    border-radius:30px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-    box-shadow:0 8px 20px rgba(255,65,108,.35);
+.logout-btn {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 8px 20px rgba(255, 65, 108, .35);
 }
 
-.logout-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 25px rgba(255,65,108,.45);
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 65, 108, .45);
 }
 
-.logout-btn:active{
-    transform:scale(.97);
+.logout-btn:active {
+  transform: scale(.97);
 }
 
-.logout-btn{
-    background: linear-gradient(135deg,#ff4b2b,#ff416c);
-    color:#fff;
-    border:none;
-    padding:12px 28px;
-    border-radius:30px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 8px 20px rgba(255,65,108,.35);
+.logout-btn {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(255, 65, 108, .35);
 }
 
-.logout-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 25px rgba(255,65,108,.45);
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 65, 108, .45);
 }
 
-.logout-btn:active{
-    transform:scale(.97);
+.logout-btn:active {
+  transform: scale(.97);
 }
 
 .input-box {
@@ -843,7 +841,7 @@ nav a:hover::after {
   width: 100%;
   padding: 16px 18px;
   background: #0d0d0d;
-  border: 1px solid rgba(212,175,55,.5);
+  border: 1px solid rgba(212, 175, 55, .5);
   border-radius: 14px;
   color: white;
   outline: none;
@@ -859,8 +857,8 @@ nav a:hover::after {
   transition: .3s;
 }
 
-.input-box input:focus + label,
-.input-box input:valid + label {
+.input-box input:focus+label,
+.input-box input:valid+label {
   top: -9px;
   left: 14px;
   background: #111;
@@ -904,10 +902,134 @@ nav a:hover::after {
 
 .login-btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(212,175,55,.4);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, .4);
 }
 
 .signup-text {
   margin-top: 22px;
   color: #ccc;
+}
+
+@media (max-width: 768px) {
+
+  @media (max-width:768px) {
+
+    header {
+      background: #111827;
+      /* Premium Dark Navy */
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 75px;
+      margin-bottom: 15px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      /* Sab ek line me */
+      gap: 12px;
+      width: 100%;
+      overflow-x: auto;
+      /* Agar jagah kam ho to scroll */
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    nav a,
+    nav button {
+      margin: 0;
+      white-space: nowrap;
+      font-size: 15px;
+    }
+
+    .logout-btn,
+    .login-btn-nav {
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+    }
+  }
+
+  .hero {
+    min-height: 85vh;
+    padding: 120px 20px 50px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  .hero-text {
+    font-size: 15px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .menu-section {
+    padding: 50px 18px;
+  }
+
+  .section-title h2 {
+    font-size: 32px;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .food-card img {
+    height: 230px;
+  }
+
+  .about {
+    padding: 50px 20px;
+    text-align: center;
+  }
+
+  .cart-panel {
+    width: 100%;
+    right: -100%;
+  }
+
+  .cart-panel.active {
+    right: 0;
+  }
+
 }
