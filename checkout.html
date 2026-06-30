@@ -1,82 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Checkout - Royal Spice</title>
   <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-<section class="checkout-page">
-  <h1>Checkout</h1>
-
-  <div id="checkoutItems"></div>
-
-  <h2>Total: ₹<span id="checkoutTotal">0</span></h2>
-
-  <form onsubmit="saveCheckout(event)" class="checkout-form">
-    <input type="text" id="customerName" placeholder="Full Name" required>
-    <input type="text" id="customerPhone" placeholder="Mobile Number" required>
-    <textarea id="customerAddress" placeholder="Full Address" required></textarea>
-
-    <button class="checkout-btn" type="submit">
-      Continue to Payment
-    </button>
-  </form>
-</section>
-
-<script>
-  const checkoutItems = document.getElementById("checkoutItems");
-  const checkoutTotal = document.getElementById("checkoutTotal");
-
-  let cart = JSON.parse(localStorage.getItem("eliteCart")) || [];
-
-  function showCheckout(){
-    checkoutItems.innerHTML = "";
-
-    let total = 0;
-
-    if(cart.length === 0){
-      checkoutItems.innerHTML = `<p>Your cart is empty</p>`;
-      checkoutTotal.innerText = 0;
-      return;
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
-    cart.forEach(item => {
-      let qty = item.qty || 1;
-      let subtotal = Number(item.price) * qty;
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #2b1a08, #080808 55%);
+      color: #fff;
+      min-height: 100vh;
+    }
 
-      total += subtotal;
+    .checkout-page {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
 
-      checkoutItems.innerHTML += `
-        <div class="cart-item">
-          <h3>${item.name}</h3>
-          <p>Price: ₹${item.price}</p>
-          <p>Qty: ${qty}</p>
-          <p>Subtotal: ₹${subtotal}</p>
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .checkout-header h1 {
+      font-size: 42px;
+      color: #f5b642;
+      margin-bottom: 8px;
+    }
+
+    .checkout-header p {
+      color: #bbb;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.8fr;
+      gap: 30px;
+    }
+
+    .checkout-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+    }
+
+    .checkout-card h2 {
+      margin-top: 0;
+      color: #f5b642;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 20px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cart-item h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.3;
+      color: #fff;
+      word-break: break-word;
+    }
+
+    .cart-item p {
+      margin: 6px 0;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #d6d6d6;
+    }
+
+    .subtotal {
+      min-width: 80px;
+      text-align: right;
+      color: #f5b642;
+      font-size: 20px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .coupon-box {
+      margin-top: 22px;
+    }
+
+    .coupon-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .coupon-row input,
+    .checkout-form input,
+    .checkout-form textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.45);
+      color: white;
+      outline: none;
+    }
+
+    .coupon-row input:focus,
+    .checkout-form input:focus,
+    .checkout-form textarea:focus {
+      border-color: #f5b642;
+    }
+
+    .coupon-row button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background: #f5b642;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .checkout-form textarea {
+      min-height: 110px;
+      resize: none;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 14px 0;
+      color: #ddd;
+    }
+
+    .summary-row.total {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 18px;
+      font-size: 22px;
+      color: #f5b642;
+      font-weight: bold;
+    }
+
+    .checkout-btn {
+      margin-top: 15px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f5b642, #ff8c00);
+      color: #111;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(245, 182, 66, 0.35);
+    }
+
+    .checkout-btn:hover,
+    .coupon-row button:hover {
+      transform: translateY(-2px);
+    }
+
+    #couponMsg {
+      margin-top: 12px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    .empty {
+      text-align: center;
+      color: #bbb;
+      padding: 30px;
+    }
+
+    @media(max-width: 850px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .checkout-header h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="checkout-page">
+
+    <div class="checkout-header">
+      <h1>Secure Checkout</h1>
+      <p>Review your order and complete delivery details</p>
+    </div>
+
+    <div class="checkout-layout">
+
+      <div class="checkout-card">
+        <h2>Your Order</h2>
+        <div id="checkoutItems"></div>
+      </div>
+
+      <div class="checkout-card">
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹<span id="checkoutTotal">0</span></span>
         </div>
-      `;
-    });
 
-    checkoutTotal.innerText = total;
-    localStorage.setItem("eliteTotal", total);
-  }
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>₹<span id="shippingCharge">50</span></span>
+        </div>
 
-  function saveCheckout(event){
-    event.preventDefault();
+        <div class="summary-row">
+          <span>Discount</span>
+          <span>- ₹<span id="discountAmount">0</span></span>
+        </div>
 
-    const customer = {
-      name: document.getElementById("customerName").value,
-      phone: document.getElementById("customerPhone").value,
-      address: document.getElementById("customerAddress").value
-    };
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>₹<span id="finalTotal">0</span></span>
+        </div>
 
-    localStorage.setItem("eliteCustomer", JSON.stringify(customer));
-    window.location.href = "payment.html";
-  }
+        <div class="coupon-box">
+          <h3>Apply Coupon</h3>
 
-  showCheckout();
-</script>
+          <div class="coupon-row">
+            <input type="text" id="couponCode" placeholder="WELCOME47 / MASUD92">
+            <button type="button" onclick="applyCoupon()">Apply</button>
+          </div>
+
+          <p id="couponMsg"></p>
+        </div>
+
+        <form onsubmit="saveCheckout(event)" class="checkout-form">
+          <input type="text" id="customerName" placeholder="Full Name" required>
+          <input type="text" id="customerPhone" placeholder="Mobile Number" required>
+          <textarea id="customerAddress" placeholder="Full Address" required></textarea>
+
+          <button class="checkout-btn" type="submit">
+            Continue to Payment
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    const checkoutItems = document.getElementById("checkoutItems");
+    const checkoutTotal = document.getElementById("checkoutTotal");
+    const finalTotal = document.getElementById("finalTotal");
+    const discountAmount = document.getElementById("discountAmount");
+
+    let shipping = 50;
+    let cartTotal = 0;
+    let discount = 0;
+    let finalAmount = 0;
+
+    function getCheckoutCart() {
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get("type") || localStorage.getItem("eliteCheckoutType");
+
+      if (type === "buy-now") {
+        localStorage.setItem("eliteCheckoutType", "buy-now");
+        return JSON.parse(localStorage.getItem("eliteBuyNow")) || [];
+      }
+
+      localStorage.setItem("eliteCheckoutType", "cart");
+      return JSON.parse(localStorage.getItem("eliteCart")) || [];
+    }
+
+    let cart = getCheckoutCart();
+
+    function showCheckout() {
+      checkoutItems.innerHTML = "";
+
+      let total = 0;
+
+      if (cart.length === 0) {
+        checkoutItems.innerHTML = `<p class="empty">Your cart is empty</p>`;
+        checkoutTotal.innerText = 0;
+        finalTotal.innerText = 0;
+        return;
+      }
+
+      cart.forEach(item => {
+        let qty = item.qty || 1;
+        let subtotal = Number(item.price) * qty;
+
+        total += subtotal;
+
+        checkoutItems.innerHTML += `
+  <div class="cart-item">
+    <div class="item-info">
+      <h3>${item.name}</h3>
+      <p>Price: ₹${item.price}</p>
+      <p>Qty: ${qty}</p>
+    </div>
+
+    <div class="subtotal">
+      ₹${subtotal}
+    </div>
+  </div>
+`;
+      });
+
+      cartTotal = total;
+      finalAmount = cartTotal + shipping - discount;
+
+      checkoutTotal.innerText = cartTotal;
+      discountAmount.innerText = discount;
+      finalTotal.innerText = finalAmount;
+
+      localStorage.setItem("eliteTotal", finalAmount);
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById("couponCode").value.trim();
+
+      if (!code) {
+        document.getElementById("couponMsg").style.color = "#ff4d4d";
+        document.getElementById("couponMsg").innerText = "Please enter coupon code";
+        return;
+      }
+
+      fetch("/apply-coupon", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          code: code,
+          cart_total: cartTotal,
+          shipping: shipping
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          const msg = document.getElementById("couponMsg");
+
+          if (data.success) {
+            msg.style.color = "#00ff99";
+            msg.innerHTML = `${data.message}<br>Discount: ₹${data.discount}`;
+
+            discount = Number(data.discount);
+            finalAmount = Number(data.final_total);
+
+            discountAmount.innerText = discount;
+            finalTotal.innerText = finalAmount;
+
+            localStorage.setItem("eliteCoupon", data.code);
+            localStorage.setItem("eliteDiscount", discount);
+            localStorage.setItem("eliteTotal", finalAmount);
+          } else {
+            msg.style.color = "#ff4d4d";
+            msg.innerHTML = data.message;
+          }
+        });
+    }
+
+    function saveCheckout(event) {
+      event.preventDefault();
+
+      const customer = {
+        name: document.getElementById("customerName").value,
+        phone: document.getElementById("customerPhone").value,
+        address: document.getElementById("customerAddress").value
+      };
+
+      localStorage.setItem("eliteCustomer", JSON.stringify(customer));
+      localStorage.setItem("eliteTotal", finalAmount);
+
+      window.location.href = "payment.html";
+    }
+
+    showCheckout();
+  </script>
 
 </body>
+
 </html>

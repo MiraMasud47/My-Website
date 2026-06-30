@@ -28,8 +28,28 @@ function saveWishlist() {
 }
 
 function updateWishlistCount() {
-  if (wishlistCount) {
-    wishlistCount.innerText = wishlist.length;
+  if (wishlistCount) wishlistCount.innerText = wishlist.length;
+}
+
+function updateCartCountOnly() {
+  if (!cartCount) return;
+  let count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+  cartCount.innerText = count;
+}
+
+function checkLoginStatus() {
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loggedIn = localStorage.getItem("eliteLoggedIn");
+
+  if (loginBtn && logoutBtn) {
+    if (loggedIn === "true") {
+      loginBtn.style.display = "none";
+      logoutBtn.style.display = "inline-block";
+    } else {
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+    }
   }
 }
 
@@ -47,7 +67,6 @@ function toggleWishlist(id) {
   }
 
   const food = foods.find(item => item.id === id);
-
   if (!food) {
     alert("Product not found");
     return;
@@ -82,7 +101,6 @@ function displayFoods(items) {
 
     menuGrid.innerHTML += `
       <div class="food-card">
-
         <button type="button" class="wishlist-btn" onclick="toggleWishlist(${food.id})">
           ${heartIcon}
         </button>
@@ -154,6 +172,7 @@ function addToCart(id) {
   }
 }
 
+/* FIXED ORDER NOW */
 function buyNow(id) {
   const loggedIn = localStorage.getItem("eliteLoggedIn");
 
@@ -163,8 +182,25 @@ function buyNow(id) {
     return;
   }
 
-  addToCart(id);
-  window.location.href = "checkout.html";
+  const food = foods.find(item => item.id === id);
+
+  if (!food) {
+    alert("Product not found");
+    return;
+  }
+
+  const buyNowProduct = [{
+    id: food.id,
+    name: food.name,
+    price: food.price,
+    image: food.image,
+    qty: 1
+  }];
+
+  localStorage.setItem("eliteBuyNow", JSON.stringify(buyNowProduct));
+  localStorage.setItem("eliteCheckoutType", "buy-now");
+
+  window.location.href = "checkout.html?type=buy-now";
 }
 
 function updateCart() {
@@ -180,8 +216,8 @@ function updateCart() {
   }
 
   cart.forEach(item => {
-    total += item.price * item.qty;
-    count += item.qty;
+    total += Number(item.price) * Number(item.qty);
+    count += Number(item.qty);
 
     cartItems.innerHTML += `
       <div class="cart-item">
@@ -210,7 +246,6 @@ function updateCart() {
 
 function changeQty(id, value) {
   const item = cart.find(product => product.id === id);
-
   if (!item) return;
 
   item.qty += value;
@@ -249,20 +284,32 @@ function goToCheckout() {
     return;
   }
 
+  localStorage.setItem("eliteCheckoutType", "cart");
   window.location.href = "checkout.html";
 }
 
 /* Checkout Page */
-const checkoutItems = document.getElementById("checkoutItems");
-const checkoutTotal = document.getElementById("checkoutTotal");
+function getCheckoutCart() {
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get("type") || localStorage.getItem("eliteCheckoutType");
+
+  if (type === "buy-now") {
+    localStorage.setItem("eliteCheckoutType", "buy-now");
+    return JSON.parse(localStorage.getItem("eliteBuyNow")) || [];
+  }
+
+  localStorage.setItem("eliteCheckoutType", "cart");
+  return JSON.parse(localStorage.getItem("eliteCart")) || [];
+}
 
 function showCheckout() {
   const checkoutItems = document.getElementById("checkoutItems");
   const checkoutTotal = document.getElementById("checkoutTotal");
+  const finalTotal = document.getElementById("finalTotal");
 
   if (!checkoutItems || !checkoutTotal) return;
 
-  const checkoutCart = JSON.parse(localStorage.getItem("eliteCart")) || [];
+  const checkoutCart = getCheckoutCart();
 
   checkoutItems.innerHTML = "";
 
@@ -271,12 +318,14 @@ function showCheckout() {
   if (checkoutCart.length === 0) {
     checkoutItems.innerHTML = `<p>Your cart is empty</p>`;
     checkoutTotal.innerText = "0";
+    if (finalTotal) finalTotal.innerText = "0";
+    localStorage.setItem("eliteTotal", 0);
     return;
   }
 
   checkoutCart.forEach(item => {
     const qty = item.qty || 1;
-    const subtotal = item.price * qty;
+    const subtotal = Number(item.price) * qty;
 
     total += subtotal;
 
@@ -291,6 +340,8 @@ function showCheckout() {
   });
 
   checkoutTotal.innerText = total;
+  if (finalTotal) finalTotal.innerText = total;
+
   localStorage.setItem("eliteTotal", total);
 }
 
@@ -332,7 +383,7 @@ paymentRadios.forEach(radio => {
   });
 });
 
-function placeOrder() {
+async function placeOrder() {
   const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
   if (!selectedPayment) {
@@ -340,29 +391,59 @@ function placeOrder() {
     return;
   }
 
+  const user = JSON.parse(localStorage.getItem("eliteUser")) || {};
+  const customer = JSON.parse(localStorage.getItem("eliteCustomer")) || {};
+  const checkoutType = localStorage.getItem("eliteCheckoutType");
+
+  let finalCart = [];
+
+  if (checkoutType === "buy-now") {
+    finalCart = JSON.parse(localStorage.getItem("eliteBuyNow")) || [];
+  } else {
+    finalCart = JSON.parse(localStorage.getItem("eliteCart")) || [];
+  }
+
+  const total = localStorage.getItem("eliteTotal") || 0;
   const payment = selectedPayment.value;
 
-  const customer = JSON.parse(localStorage.getItem("eliteCustomer")) || {};
-  const finalCart = JSON.parse(localStorage.getItem("eliteCart")) || [];
-  const total = localStorage.getItem("eliteTotal") || 0;
+  if (finalCart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
 
-  const order = {
-    customer: customer,
-    cart: finalCart,
-    payment: payment,
-    total: total,
-    status: "Confirmed",
-    date: new Date().toLocaleString()
-  };
+  const response = await fetch("/save_order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      user_id: user.id || null,
+      customer: customer,
+      cart: finalCart,
+      payment: payment,
+      total: total
+    })
+  });
 
-  const orders = JSON.parse(localStorage.getItem("eliteOrders")) || [];
-  orders.push(order);
+  const result = await response.json();
 
-  localStorage.setItem("eliteOrders", JSON.stringify(orders));
-  localStorage.setItem("elitePayment", payment);
-  localStorage.removeItem("eliteCart");
+  if (result.status === "success") {
+    localStorage.setItem("elitePayment", payment);
+    localStorage.setItem("eliteOrderId", result.order_id);
 
-  window.location.href = "success.html";
+    if (checkoutType === "buy-now") {
+      localStorage.removeItem("eliteBuyNow");
+    } else {
+      localStorage.removeItem("eliteCart");
+    }
+
+    localStorage.removeItem("eliteCheckoutType");
+
+    alert("Order saved successfully!");
+    window.location.href = "success.html";
+  } else {
+    alert(result.message || "Order not saved.");
+  }
 }
 
 /* Success Page */
@@ -388,33 +469,56 @@ function togglePassword() {
   password.type = password.type === "password" ? "text" : "password";
 }
 
-function loginUser(event) {
+function toggleSignupPassword() {
+  const pass = document.getElementById("signupPassword");
+  if (!pass) return;
+
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+async function signupUser(event) {
   event.preventDefault();
 
-  const email = document.getElementById("loginEmail")?.value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword")?.value.trim();
+  const data = {
+    name: document.getElementById("signupName").value,
+    email: document.getElementById("signupEmail").value,
+    phone: document.getElementById("signupPhone").value,
+    password: document.getElementById("signupPassword").value
+  };
 
-  if (!email || !password) {
-    alert("Please fill all fields");
-    return;
+  const res = await fetch("/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  alert(result.message);
+
+  if (result.status === "success") {
+    window.location.href = "login.html";
   }
+}
 
-  const savedUser = JSON.parse(localStorage.getItem("eliteUserAccount"));
+async function loginUser(event) {
+  event.preventDefault();
 
-  if (!savedUser) {
-    alert("No account found. Please signup first.");
-    window.location.href = "signup.html";
-    return;
-  }
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: document.getElementById("loginEmail").value,
+      password: document.getElementById("loginPassword").value
+    })
+  });
 
-  if (email === savedUser.email && password === savedUser.password) {
+  const result = await res.json();
+  alert(result.message);
+
+  if (result.status === "success") {
     localStorage.setItem("eliteLoggedIn", "true");
-    localStorage.setItem("eliteUser", JSON.stringify(savedUser));
-
-    alert("Login successful!");
+    localStorage.setItem("eliteUser", JSON.stringify(result.user));
     window.location.href = "dashboard.html";
-  } else {
-    alert("Invalid email or password!");
   }
 }
 
@@ -426,73 +530,6 @@ function logoutUser() {
   window.location.href = "index.html";
 }
 
-function toggleSignupPassword() {
-  const pass = document.getElementById("signupPassword");
-  if (!pass) return;
-
-  pass.type = pass.type === "password" ? "text" : "password";
-}
-
-function signupUser(event) {
-  event.preventDefault();
-
-  const name = document.getElementById("signupName")?.value.trim();
-  const email = document.getElementById("signupEmail")?.value.trim().toLowerCase();
-  const phone = document.getElementById("signupPhone")?.value.trim() || "";
-  const password = document.getElementById("signupPassword")?.value.trim();
-  const confirm = document.getElementById("confirmPassword")?.value.trim();
-
-  if (!name || !email || !password) {
-    alert("Please fill all required fields");
-    return;
-  }
-
-  if (confirm && password !== confirm) {
-    alert("Passwords do not match.");
-    return;
-  }
-
-  const user = {
-    name: name,
-    email: email,
-    phone: phone,
-    password: password,
-    address: ""
-  };
-
-  localStorage.setItem("eliteUserAccount", JSON.stringify(user));
-
-  alert("Signup successful! Please login.");
-  window.location.href = "login.html";
-}
-
-function checkLoginStatus() {
-  const loggedIn = localStorage.getItem("eliteLoggedIn");
-
-  const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const profileBtn = document.getElementById("profileBtn");
-
-  const loginLink = document.getElementById("loginLink");
-  const logoutLink = document.getElementById("logoutLink");
-
-  if (loggedIn === "true") {
-    if (loginBtn) loginBtn.style.display = "none";
-    if (logoutBtn) logoutBtn.style.display = "inline-block";
-    if (profileBtn) profileBtn.style.display = "inline-block";
-
-    if (loginLink) loginLink.style.display = "none";
-    if (logoutLink) logoutLink.style.display = "inline-block";
-  } else {
-    if (loginBtn) loginBtn.style.display = "inline-block";
-    if (logoutBtn) logoutBtn.style.display = "none";
-    if (profileBtn) profileBtn.style.display = "none";
-
-    if (loginLink) loginLink.style.display = "inline-block";
-    if (logoutLink) logoutLink.style.display = "none";
-  }
-}
-
 /* Run */
 if (searchInput) {
   searchInput.addEventListener("input", applyFilters);
@@ -500,6 +537,7 @@ if (searchInput) {
 
 displayFoods(foods);
 updateCart();
+updateCartCountOnly();
 updateWishlistCount();
 showCheckout();
 checkLoginStatus();
